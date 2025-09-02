@@ -4,10 +4,10 @@
   "description": "Portal de notícias e análises de apostas esportivas do Brasil",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
+    "dev": "cd frontend/appdeapostas && next dev",
+    "build": "cd frontend/appdeapostas && next build",
+    "start": "cd frontend/appdeapostas && next start",
+    "lint": "cd frontend/appdeapostas && next lint",
     "test": "playwright test",
     "test:admin": "python scripts/test_admin_completo.py",
     "setup:test": "bash scripts/setup_e_executar_teste.sh"
