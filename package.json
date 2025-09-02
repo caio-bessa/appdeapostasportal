@@ -1,0 +1,49 @@
+{
+  "name": "appdeapostas-portal",
+  "version": "1.0.0",
+  "description": "Portal de notícias e análises de apostas esportivas do Brasil",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "playwright test",
+    "test:admin": "python scripts/test_admin_completo.py",
+    "setup:test": "bash scripts/setup_e_executar_teste.sh"
+  },
+  "keywords": [
+    "apostas",
+    "esportes",
+    "nextjs",
+    "strapi",
+    "cms",
+    "portal",
+    "noticias"
+  ],
+  "author": "Caio Bessa <caio.bessa@acroud.media>",
+  "license": "MIT",
+  "dependencies": {
+    "next": "15.5.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:caio-bessa/appdeapostasportal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/caio-bessa/appdeapostasportal/issues"
+  },
+  "homepage": "https://appdeapostas.com.br"
+}
