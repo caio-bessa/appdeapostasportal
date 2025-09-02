@@ -15,6 +15,7 @@ const footerLinks = {
     { name: 'Tutoriais', href: '/tutoriais' },
     { name: 'Bônus', href: '/bonus' },
     { name: 'Blog', href: '/blog' },
+    { name: 'Odds', href: '/odds' },
   ],
   sports: [
     { name: 'Futebol', href: '/categoria/futebol' },

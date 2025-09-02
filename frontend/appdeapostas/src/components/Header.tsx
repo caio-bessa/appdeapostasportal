@@ -10,7 +10,9 @@ const navigation = [
   { name: 'Análises', href: '/analises' },
   { name: 'Notícias', href: '/noticias' },
   { name: 'Bônus', href: '/bonus' },
+  { name: 'Odds', href: '/odds' },
   { name: 'Tutoriais', href: '/tutoriais' },
+  { name: 'Blog', href: '/blog' },
 ]
 
 export default function Header() {
@@ -33,12 +35,12 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-600 hover:text-blue-600 font-medium transition-colors"
+                className="text-gray-600 hover:text-blue-600 font-medium transition-colors text-sm"
               >
                 {item.name}
               </Link>
@@ -55,14 +57,14 @@ export default function Header() {
             </button>
             <Link
               href="/apps"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
             >
               Comparar Apps
             </Link>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               type="button"
               className="p-2 text-gray-600 hover:text-blue-600"
@@ -79,7 +81,7 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200">
+          <div className="lg:hidden border-t border-gray-200">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
                 <Link
