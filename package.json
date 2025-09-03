@@ -4,14 +4,14 @@
   "description": "Portal de notícias e análises de apostas esportivas do Brasil",
   "main": "index.js",
   "scripts": {
-    "dev": "cd frontend/appdeapostas && npm run dev",
-    "build": "cd frontend/appdeapostas && npm run build",
-    "start": "cd frontend/appdeapostas && npm run start",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint",
     "test": "playwright test",
     "test:admin": "python scripts/test_admin_completo.py",
     "setup:test": "bash scripts/setup_e_executar_teste.sh",
-    "install:frontend": "cd frontend/appdeapostas && npm install",
+    "install:frontend": "npm install",
     "docker:up": "docker-compose -f docker-compose.production.yml up -d",
     "docker:down": "docker-compose -f docker-compose.production.yml down"
   },
