@@ -146,4 +146,4 @@ build/
 
 # Local development
 .local/
-local/
+local/*.tar.gz
