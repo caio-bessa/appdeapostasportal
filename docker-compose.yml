@@ -1,0 +1,103 @@
+# Docker Compose para desenvolvimento - AppdeApostas.com.br
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: appdeapostas-postgres-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-appdeapostas}
+      POSTGRES_USER: ${DATABASE_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-appdeapostas123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME:-postgres}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  strapi:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: appdeapostas-strapi-dev
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${DATABASE_NAME:-appdeapostas}
+      DATABASE_USERNAME: ${DATABASE_USERNAME:-postgres}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-appdeapostas123}
+      JWT_SECRET: ${JWT_SECRET:-changeme123456789012345678901234567890}
+      API_TOKEN_SALT: ${API_TOKEN_SALT:-changeme123456789012345678901234567890}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET:-changeme123456789012345678901234567890}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT:-changeme123456789012345678901234567890}
+      APP_KEYS: ${APP_KEYS:-key1,key2,key3,key4}
+      HOST: 0.0.0.0
+      PORT: 1337
+    volumes:
+      - ./backend:/opt/app
+      - strapi_uploads:/opt/app/public/uploads
+      - strapi_node_modules:/opt/app/node_modules
+    ports:
+      - "1337:1337"
+    networks:
+      - app-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["npm", "run", "develop"]
+
+  frontend:
+    build:
+      context: ./frontend/appdeapostas
+      dockerfile: Dockerfile.dev
+    container_name: appdeapostas-frontend-dev
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_STRAPI_URL: http://localhost:1337/api
+      STRAPI_API_TOKEN: ${STRAPI_API_TOKEN:-}
+      WATCHPACK_POLLING: true
+    volumes:
+      - ./frontend/appdeapostas:/app
+      - frontend_node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - strapi
+    command: ["npm", "run", "dev"]
+
+  nginx:
+    image: nginx:alpine
+    container_name: appdeapostas-nginx-dev
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - app-network
+    depends_on:
+      - frontend
+      - strapi
+
+volumes:
+  postgres_data:
+  strapi_uploads:
+  strapi_node_modules:
+  frontend_node_modules:
+
+networks:
+  app-network:
+    driver: bridge

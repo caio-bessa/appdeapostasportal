@@ -1,0 +1,52 @@
+# Dockerfile para produção - Backend Strapi
+FROM node:20-alpine AS base
+
+WORKDIR /opt/app
+
+# Instalar dependências do sistema
+RUN apk update && apk add --no-cache \
+    build-base \
+    gcc \
+    autoconf \
+    automake \
+    zlib-dev \
+    libpng-dev \
+    vips-dev \
+    git \
+    && rm -rf /var/cache/apk/*
+
+# Instalar dependências apenas quando necessário
+FROM base AS deps
+COPY package*.json ./
+RUN npm ci --only=production && npm cache clean --force
+
+# Build da aplicação
+FROM base AS builder
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Imagem de produção
+FROM base AS runner
+
+ENV NODE_ENV=production
+
+# Criar usuário não-root
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 strapi
+
+# Copiar dependências
+COPY --from=deps --chown=strapi:nodejs /opt/app/node_modules ./node_modules
+
+# Copiar build da aplicação
+COPY --from=builder --chown=strapi:nodejs /opt/app ./
+
+# Criar diretório para uploads
+RUN mkdir -p /opt/app/public/uploads && chown -R strapi:nodejs /opt/app/public
+
+USER strapi
+
+EXPOSE 1337
+
+CMD ["npm", "start"]
