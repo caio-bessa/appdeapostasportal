@@ -1,4 +1,4 @@
-# 🏆 AppdeApostas Portal - Setup Nativo
+# 🏆 AppdeApostas Portal - MVP Produção
 
 <div align="center">
 
@@ -6,12 +6,16 @@
 
 **Portal completo de notícias, análises e reviews sobre aplicativos de apostas esportivas no Brasil**
 
+[![Live Site](https://img.shields.io/badge/Live_Site-https://appdeapostas.com.br-green?style=flat-square&logo=google-chrome)](https://appdeapostas.com.br)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![Strapi](https://img.shields.io/badge/Strapi-4.25.9-blue?style=flat-square&logo=strapi)](https://strapi.io/)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=flat-square&logo=node.js)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20.19.4-green?style=flat-square&logo=node.js)](https://nodejs.org/)
 [![SQLite](https://img.shields.io/badge/SQLite-3+-blue?style=flat-square&logo=sqlite)](https://sqlite.org/)
+[![SSL](https://img.shields.io/badge/SSL-Let's_Encrypt-brightgreen?style=flat-square&logo=letsencrypt)](https://letsencrypt.org/)
 
-[🚀 Demo](https://appdeapostas.com.br) • [📖 Docs](./docs/) • [🐛 Issues](https://github.com/caio-bessa/appdeapostasportal/issues)
+[🌐 Site Live](https://appdeapostas.com.br) • [🛠️ Admin](https://appdeapostas.com.br/admin) • [📊 Arquitetura](./ARQUITETURA.md) • [📋 Changelog](./CHANGELOG-FINAL.md)
+
+**🎉 MVP 100% FUNCIONAL EM PRODUÇÃO! 🎉**
 
 </div>
 

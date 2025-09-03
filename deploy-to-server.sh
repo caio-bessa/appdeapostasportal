@@ -7,7 +7,7 @@
 set -e
 
 # Configurações
-SERVER_IP="3.143.118.176"
+SERVER_IP="3.18.213.189"
 SERVER_USER="ec2-user"
 SERVER_PATH="/home/ec2-user/appdeapostas-native"
 LOCAL_PACKAGE="appdeapostas-portal-native.tar.gz"
