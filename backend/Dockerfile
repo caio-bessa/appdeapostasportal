@@ -21,11 +21,19 @@ COPY package*.json ./
 # Instalar dependências
 RUN npm install
 
+# Criar usuário não-root
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S strapi -u 1001 -G nodejs
+
 # Copiar código fonte
 COPY . .
 
-# Criar diretório para uploads
-RUN mkdir -p /opt/app/public/uploads
+# Criar diretório para uploads e ajustar permissões
+RUN mkdir -p /opt/app/public/uploads && \
+    chown -R strapi:nodejs /opt/app
+
+# Mudar para usuário não-root
+USER strapi
 
 # Expor porta
 EXPOSE 1337

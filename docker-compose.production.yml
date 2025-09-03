@@ -6,6 +6,8 @@ services:
     image: postgres:14-alpine
     container_name: appdeapostas-postgres-prod
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     environment:
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_USER: ${DATABASE_USERNAME}
@@ -74,6 +76,8 @@ services:
     image: nginx:alpine
     container_name: appdeapostas-nginx-prod
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     ports:
       - "80:80"
       - "443:443"
