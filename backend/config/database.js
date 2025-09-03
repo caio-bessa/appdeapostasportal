@@ -1,25 +1,22 @@
-const parse = require('pg-connection-string').parse;
+const path = require('path');
 
 module.exports = ({ env }) => {
-  // Configuração para desenvolvimento local
-  if (env('NODE_ENV') === 'development') {
+  // Para desenvolvimento - usar SQLite (funciona sem Docker)
+  if (env('NODE_ENV', 'development') === 'development') {
     return {
       connection: {
-        client: 'postgres',
+        client: 'sqlite',
         connection: {
-          host: env('DATABASE_HOST', 'localhost'),
-          port: env.int('DATABASE_PORT', 5432),
-          database: env('DATABASE_NAME', 'appdeapostas'),
-          user: env('DATABASE_USERNAME', 'postgres'),
-          password: env('DATABASE_PASSWORD', 'appdeapostas123'),
-          ssl: env.bool('DATABASE_SSL', false),
+          filename: path.join(__dirname, '..', '.tmp/data.db'),
         },
+        useNullAsDefault: true,
       },
     };
   }
 
-  // Configuração para produção
+  // Para produção - PostgreSQL (quando disponível)
   if (env('DATABASE_URL')) {
+    const parse = require('pg-connection-string').parse;
     const config = parse(env('DATABASE_URL'));
     return {
       connection: {
@@ -36,18 +33,14 @@ module.exports = ({ env }) => {
     };
   }
 
-  // Fallback para configuração manual
+  // Fallback para SQLite se PostgreSQL não disponível
   return {
     connection: {
-      client: 'postgres',
+      client: 'sqlite',
       connection: {
-        host: env('DATABASE_HOST', 'postgres'),
-        port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'appdeapostas'),
-        user: env('DATABASE_USERNAME', 'postgres'),
-        password: env('DATABASE_PASSWORD'),
-        ssl: env.bool('DATABASE_SSL', false),
+        filename: path.join(__dirname, '..', '.tmp/data.db'),
       },
+      useNullAsDefault: true,
     },
   };
 };

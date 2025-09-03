@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "teams",
+  "info": {
+    "singularName": "team",
+    "pluralName": "teams",
+    "displayName": "Team",
+    "description": "Times esportivos para tags em artigos"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 100
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "logo_url": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "sport": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "articles": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::article.article",
+      "inversedBy": "related_teams"
+    }
+  }
+}

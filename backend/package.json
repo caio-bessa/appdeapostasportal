@@ -11,15 +11,20 @@
     "seed": "node scripts/seed.js"
   },
   "dependencies": {
-    "@strapi/strapi": "4.25.9",
-    "@strapi/plugin-users-permissions": "4.25.9",
-    "@strapi/plugin-upload": "4.25.9",
-    "@strapi/plugin-i18n": "4.25.9",
     "@strapi/plugin-content-manager": "4.25.9",
     "@strapi/plugin-content-type-builder": "4.25.9",
     "@strapi/plugin-email": "4.25.9",
+    "@strapi/plugin-i18n": "4.25.9",
+    "@strapi/plugin-upload": "4.25.9",
+    "@strapi/plugin-users-permissions": "4.25.9",
+    "@strapi/strapi": "4.25.9",
+    "better-sqlite3": "^8.7.0",
     "pg": "^8.8.0",
-    "pg-connection-string": "^2.5.0"
+    "pg-connection-string": "^2.5.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^5.3.4",
+    "styled-components": "^5.3.11"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
