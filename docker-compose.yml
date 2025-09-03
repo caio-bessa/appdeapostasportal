@@ -71,6 +71,7 @@ services:
       WATCHPACK_POLLING: true
     volumes:
       - ./frontend/appdeapostas:/app
+      - /app/node_modules
     ports:
       - "3000:3005"
     networks:
