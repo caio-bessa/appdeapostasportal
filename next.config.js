@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true
-  },
   images: {
     domains: ['images.pexels.com', 'via.placeholder.com'],
     remotePatterns: [
@@ -15,8 +12,7 @@ const nextConfig = {
     ],
   },
   env: {
-    NEXT_PUBLIC_SITE_URL: 'https://appdeapostas.com.br',
-    NEXT_PUBLIC_STRAPI_URL: 'https://appdeapostas.com.br/api',
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://appdeapostas.com.br',
   }
 }
 
