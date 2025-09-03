@@ -6,10 +6,10 @@
 
 **Portal completo de notícias, análises e reviews sobre aplicativos de apostas esportivas no Brasil**
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![Strapi](https://img.shields.io/badge/Strapi-4.25.9-blue?style=flat-square&logo=strapi)](https://strapi.io/)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://docker.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14-336791?style=flat-square&logo=postgresql)](https://postgresql.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-14.2.3-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-Backend-green?style=flat-square&logo=supabase)](https://supabase.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 
 [🚀 Demo](https://appdeapostas.com.br) • [📖 Docs](./docs/) • [🐛 Issues](https://github.com/caio-bessa/appdeapostasportal/issues)
 
@@ -32,30 +32,30 @@ O **AppdeApostas.com.br** é um portal completo dedicado ao universo das apostas
 ## 🏗️ **Arquitetura**
 
 ### Frontend
-- **Next.js 15.5.2** - React framework com App Router
+- **Next.js 14.2.3** - React framework com App Router
 - **TypeScript** - Tipagem estática
 - **Tailwind CSS** - Estilização utilitária
-- **Axios** - Cliente HTTP para APIs
+- **Lucide React** - Ícones modernos
 
 ### Backend
-- **Strapi 4.25.9** - Headless CMS
-- **PostgreSQL 14** - Banco de dados relacional
-- **Node.js 20** - Runtime JavaScript
+- **Supabase** - Backend-as-a-Service
+- **PostgreSQL** - Banco de dados relacional
+- **Row Level Security** - Segurança nativa
+- **Real-time** - Atualizações em tempo real
 
 ### Infraestrutura
-- **Docker & Docker Compose** - Containerização
-- **Nginx** - Proxy reverso e load balancer
-- **AWS EC2** - Hospedagem em produção
+- **Vercel** - Deploy e hospedagem
 - **Cloudflare** - CDN e SSL
+- **GitHub** - Versionamento e CI/CD
 
 ---
 
 ## 🚀 **Quick Start**
 
 ### Pré-requisitos
-- [Docker](https://docker.com/) 20.10+
-- [Docker Compose](https://docs.docker.com/compose/) 2.0+
+- [Node.js](https://nodejs.org/) 18.0+
 - [Git](https://git-scm.com/)
+- Conta no [Supabase](https://supabase.com/)
 
 ### 1. Clone o Repositório
 ```bash
@@ -63,27 +63,89 @@ git clone https://github.com/caio-bessa/appdeapostasportal.git
 cd appdeapostasportal
 ```
 
-### 2. Setup Automático
+### 2. Instale as Dependências
 ```bash
-./scripts/setup.sh
+npm install
 ```
 
-Este script irá:
-- ✅ Verificar dependências
-- ✅ Criar arquivo `.env` com secrets seguros
-- ✅ Inicializar containers Docker
-- ✅ Configurar banco de dados
-- ✅ Verificar health dos serviços
+### 3. Configure o Ambiente
+```bash
+cp .env.example .env.local
+# Edite .env.local com suas credenciais do Supabase
+```
 
-### 3. Configurar Strapi Admin
-1. Acesse [http://localhost:1337/admin](http://localhost:1337/admin)
-2. Crie o primeiro usuário administrador
-3. Configure permissões para APIs públicas
+### 4. Configure o Supabase
+1. Crie um novo projeto no [Supabase](https://supabase.com/)
+2. Copie a URL e a chave anônima para o `.env.local`
+3. Execute as migrações do banco de dados (veja seção Database)
 
-### 4. Acessar Aplicação
-- **Frontend:** [http://localhost:3000](http://localhost:3000)
-- **Admin Strapi:** [http://localhost:1337/admin](http://localhost:1337/admin)
-- **API:** [http://localhost:1337/api](http://localhost:1337/api)
+### 5. Execute o Projeto
+```bash
+npm run dev
+```
+
+Acesse [http://localhost:3000](http://localhost:3000) para ver o resultado.
+
+---
+
+## 🗄️ **Database Schema**
+
+O projeto usa Supabase com as seguintes tabelas:
+
+### Categories
+- `id` (uuid, primary key)
+- `name` (text, unique)
+- `slug` (text, unique)
+- `description` (text)
+- `featured` (boolean)
+
+### Authors
+- `id` (uuid, primary key)
+- `name` (text)
+- `slug` (text, unique)
+- `bio` (text)
+- `specialization` (text)
+- `avatar_url` (text)
+- `social_links` (jsonb)
+
+### Teams
+- `id` (uuid, primary key)
+- `name` (text, unique)
+- `slug` (text, unique)
+- `city` (text)
+- `state` (text)
+- `league` (text)
+- `logo_url` (text)
+- `founded_year` (integer)
+
+### Apps
+- `id` (uuid, primary key)
+- `name` (text, unique)
+- `slug` (text, unique)
+- `description` (text)
+- `rating` (numeric)
+- `pros` (text)
+- `cons` (text)
+- `bonus_info` (text)
+- `minimum_deposit` (integer)
+- `payment_methods` (text)
+- `license_info` (text)
+- `download_url` (text)
+- `featured` (boolean)
+
+### Articles
+- `id` (uuid, primary key)
+- `title` (text)
+- `slug` (text, unique)
+- `content` (text)
+- `excerpt` (text)
+- `seo_title` (text)
+- `seo_description` (text)
+- `featured_image_url` (text)
+- `published_at` (timestamptz)
+- `featured` (boolean)
+- `category_id` (uuid, foreign key)
+- `author_id` (uuid, foreign key)
 
 ---
 
@@ -91,168 +153,107 @@ Este script irá:
 
 ```
 appdeapostasportal/
-├── 📁 frontend/appdeapostas/     # Frontend Next.js
-│   ├── src/app/                 # Páginas da aplicação
-│   ├── src/components/          # Componentes React
-│   ├── src/lib/                 # Utilities e configs
-│   └── Dockerfile.*             # Containers Docker
-├── 📁 backend/                  # Backend Strapi
-│   ├── src/api/                 # Content types e APIs
-│   ├── config/                  # Configurações Strapi
-│   └── Dockerfile.*             # Containers Docker
-├── 📁 nginx/                    # Configurações proxy
-├── 📁 scripts/                  # Scripts de automação
-├── 📁 docs/                     # Documentação técnica
-├── docker-compose.yml           # Desenvolvimento
-├── docker-compose.production.yml # Produção
-└── .env.example                 # Template variáveis
+├── 📁 src/
+│   ├── 📁 app/                  # Páginas da aplicação (App Router)
+│   │   ├── page.tsx             # Homepage
+│   │   ├── apps/                # Seção de apps
+│   │   ├── noticias/            # Seção de notícias
+│   │   ├── analises/            # Seção de análises
+│   │   └── layout.tsx           # Layout principal
+│   ├── 📁 components/           # Componentes React
+│   │   ├── Header.tsx           # Cabeçalho
+│   │   ├── Footer.tsx           # Rodapé
+│   │   └── ui/                  # Componentes de UI
+│   ├── 📁 lib/                  # Utilities e configs
+│   │   ├── supabase.ts          # Cliente Supabase
+│   │   └── utils.ts             # Funções utilitárias
+│   └── 📁 types/                # Definições TypeScript
+├── 📁 docs/                     # Documentação
+├── 📁 public/                   # Assets estáticos
+├── package.json                 # Dependências
+├── tailwind.config.js           # Configuração Tailwind
+├── next.config.js               # Configuração Next.js
+└── README.md                    # Este arquivo
 ```
 
 ---
 
-## 🐳 **Comandos Docker**
+## 🔧 **Comandos Disponíveis**
 
 ### Desenvolvimento
 ```bash
-# Iniciar ambiente de desenvolvimento
-docker compose up -d
-
-# Ver logs em tempo real
-docker compose logs -f
-
-# Parar containers
-docker compose down
-
-# Rebuild completo
-docker compose up --build -d
+npm run dev          # Inicia servidor de desenvolvimento
+npm run build        # Build para produção
+npm run start        # Inicia servidor de produção
+npm run lint         # Executa ESLint
+npm run type-check   # Verifica tipos TypeScript
 ```
 
-### Produção
+### Database
 ```bash
-# Deploy para produção
-./scripts/deploy.sh
-
-# Monitorar produção
-docker compose -f docker-compose.production.yml logs -f
-
-# Health check
-curl http://localhost/health
+# Conectar ao Supabase e executar migrações
+# (Instruções detalhadas na seção Database)
 ```
 
 ---
 
-## 🔧 **Configuração**
+## 🌐 **Deploy**
 
-### Variáveis de Ambiente
+### Vercel (Recomendado)
+1. Conecte seu repositório GitHub ao Vercel
+2. Configure as variáveis de ambiente
+3. Deploy automático a cada push na branch main
 
-Copie `.env.example` para `.env` e configure:
+### Outras Plataformas
+- **Netlify**: Suporte nativo para Next.js
+- **AWS Amplify**: Integração com AWS
+- **Railway**: Deploy simples com banco incluído
+
+---
+
+## 🔐 **Variáveis de Ambiente**
+
+Copie `.env.example` para `.env.local` e configure:
 
 ```bash
-# URLs principais
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=sua_url_do_supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anonima
+
+# Site
 NEXT_PUBLIC_SITE_URL=https://appdeapostas.com.br
-NEXT_PUBLIC_STRAPI_URL=https://appdeapostas.com.br/api
+NEXT_PUBLIC_SITE_NAME=AppdeApostas Brasil
 
-# Database
-DATABASE_NAME=appdeapostas
-DATABASE_USERNAME=postgres
-DATABASE_PASSWORD=your_password
-
-# Strapi Secrets (gerados automaticamente)
-JWT_SECRET=your_jwt_secret
-API_TOKEN_SALT=your_api_token_salt
-ADMIN_JWT_SECRET=your_admin_jwt_secret
-```
-
-### Content Types Strapi
-
-O projeto inclui os seguintes content types pré-configurados:
-
-- **📂 Categories** - Categorias de conteúdo
-- **📰 Articles** - Artigos e notícias  
-- **👤 Authors** - Autores do conteúdo
-- **🏆 Teams** - Times esportivos
-- **📱 Apps** - Aplicativos de apostas
-- **🏷️ Tags** - Tags para organização
-
----
-
-## 🧪 **Testes**
-
-### Testes Automatizados
-```bash
-# Frontend (Jest + Testing Library)
-cd frontend/appdeapostas && npm test
-
-# E2E com Playwright
-npm run test:e2e
-
-# Testes de API
-npm run test:api
-```
-
-### Testes Manuais
-```bash
-# Verificar saúde dos serviços
-curl http://localhost/health
-
-# Testar API do Strapi
-curl http://localhost:1337/api/articles
-
-# Testar frontend
-curl http://localhost:3000
+# Opcional
+NEXT_PUBLIC_GA_ID=seu_google_analytics_id
+CONTACT_EMAIL=contato@appdeapostas.com.br
 ```
 
 ---
 
-## 🚀 **Deploy**
+## 📊 **Funcionalidades**
 
-### Deploy Automático (AWS EC2)
+### ✅ Implementado
+- [x] Homepage com apps em destaque
+- [x] Seção de apps com filtros e comparação
+- [x] Seção de notícias por categoria
+- [x] Seção de análises especializadas
+- [x] Design responsivo
+- [x] SEO otimizado
+- [x] Performance otimizada
 
-1. Configure as variáveis de ambiente de produção:
-```bash
-cp .env.example .env.production
-# Edite .env.production com configurações de produção
-```
+### 🔄 Em Desenvolvimento
+- [ ] Sistema de busca avançado
+- [ ] Comentários em artigos
+- [ ] Newsletter
+- [ ] Painel administrativo
+- [ ] Sistema de usuários
 
-2. Execute o deploy:
-```bash
-./scripts/deploy.sh
-```
-
-### Deploy Manual
-
-1. Build das imagens:
-```bash
-docker compose -f docker-compose.production.yml build
-```
-
-2. Iniciar em produção:
-```bash
-docker compose -f docker-compose.production.yml up -d
-```
-
----
-
-## 📊 **Monitoramento**
-
-### Health Checks
-- **Application:** `http://localhost/health`
-- **Database:** Verificação automática via Docker
-- **Strapi:** `http://localhost:1337/admin`
-
-### Logs
-```bash
-# Todos os serviços
-docker compose logs -f
-
-# Serviço específico
-docker compose logs -f strapi
-docker compose logs -f frontend
-```
-
-### Métricas
-- Container resource usage: `docker stats`
-- Application performance: Integração com ferramentas APM
+### 🎯 Roadmap
+- [ ] Integração com APIs de odds
+- [ ] Sistema de notificações
+- [ ] App mobile (React Native)
+- [ ] Dashboard de analytics
 
 ---
 
